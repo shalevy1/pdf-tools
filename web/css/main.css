@@ -1,0 +1,75 @@
+body{
+    background: rgb(2,0,36);
+}
+
+.container-fluid{
+    display: none;
+    transition: opacity 1s ease-out;
+    opacity: 0; 
+}
+
+.container-fluid.active{
+    display: block !important;
+    opacity: 1;
+}
+
+h1{
+    color: aliceblue;
+    margin: 10px;
+    margin-left: 0 !important;
+}
+
+input, .custom-file-label {
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    border: none !important;
+    /* color: aliceblue !important; */
+}
+
+.input-group-text{
+    cursor: pointer !important;
+}
+
+.fixed-bottom{
+    background-color: whitesmoke;
+    height: 60px;
+}
+
+.fixed-bottom a img{
+    margin: 0;
+    width: 30px;
+}
+
+table{
+    min-width: 550px;
+    margin: auto;
+}
+/* .table th{
+    width: 33.33% !important;
+} */
+
+table .input-group{
+    width: 160px;
+    margin: auto ;
+}
+
+.input-group-addon{
+    text-align: center;
+    background-color: #eee;
+    border-radius: 4px 0 0 4px;
+    vertical-align: center;
+    min-width: 60px;
+    margin-bottom: 0;
+    line-height: 2.1em;
+}
+
+/* .croping{
+    width: 20px !important;
+}
+
+.cropper-canvas{
+    height: 100%;
+}
+
+#image{
+    max-width: 100%
+} */

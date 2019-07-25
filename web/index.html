@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/png" href="favicon.ico"/>
+    <title>App!</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/cropper.min.css">    
+    <link rel="stylesheet" href="css/main.css">
+
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>    
+    <script type="text/javascript" src="js/cropper.min.js"></script>
+    <!-- <script type="text/javascript" src="js/pdf.min.js"></script> -->
+    <!-- <script type="text/javascript" src="js/main.js"></script> -->
+    
+    
+  </head>
+  <body>
+   
+
+    <div class="container-fluid active" id="split-section">
+
+      <h1>PDF Spliter</h1>
+
+      <form class="text-light">
+        <div class="form-row">
+          <div class="col-md-12 mb-3">
+            <label>Pdf file</label>
+            <div class="input-group">
+              <input type="text" readonly class="form-control" id="pdfFile">
+              <div class="input-group-prepend">
+                  <a class="input-group-text text-dark rounded-right" onclick="return getPdfPath()">Choose file</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="startPage">first page</label>
+            <input type="number" min=0 class="form-control" id="startPage" placeholder="start page" value="1" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="endPage">Last page</label>
+            <input type="number" min=1 class="form-control" id="endPage" placeholder="end page" value="5" required>
+          </div>
+      
+        </div>
+      </form>
+
+      <button class="btn btn-outline-light" onclick="splitPdf()">split pdf</button>
+    </div>
+
+    <div class="container-fluid" id="merge-section">
+      <h1>PDF Merge</h1>
+      <form class="text-light">
+          <div class="form-row">
+              <label>First file</label>
+              <div class="input-group">
+                <input type="text" readonly class="form-control" id="pdfFile1">
+                <div class="input-group-prepend">
+                    <a class="input-group-text text-dark rounded-right" onclick="return getPdfPath1()">Choose file</a>
+                </div>
+              </div>
+            </div>
+            <div class="form-row my-3">
+                <label>Seconde file</label>
+                <div class="input-group">
+                  <input type="text" readonly class="form-control" id="pdfFile2">
+                  <div class="input-group-prepend">
+                      <a class="input-group-text text-dark rounded-right" onclick="return getPdfPath2()">Choose file</a>
+                  </div>
+                </div>
+              </div>
+        </form>
+        <button class="btn btn-outline-light" onclick="mergePdf()">merge pdf</button>
+    </div>
+
+    <div class="container-fluid" id="crop-section">
+      <h1>PDF Crop</h1>
+        <div class="form-row text-light mb-3">
+            <label>PDF file</label>
+            <div class="input-group">
+              <input type="text" readonly class="form-control" id="pdfFile3">
+              <div class="input-group-prepend">
+                  <a class="input-group-text text-dark rounded-right" onclick="return getPdfPath3()">Choose file</a>
+              </div>
+            </div>
+        </div>
+        <form class="row">
+            <div class="col input-group">
+              <label for="top" class="input-group-addon">top:</label>
+              <input type="number" min=0 id="top" class="form-control croping">
+            </div>
+            <div class="col input-group">
+              <label for="top" class="input-group-addon">right:</label>
+              <input type="number" min=0 id="right" class="form-control croping">
+            </div>
+        </form>
+        <form class="row mt-1">
+            <div class="col input-group">
+              <label for="top" class="input-group-addon">bottom:</label>
+              <input type="number" min=0 id="bottom" class="form-control croping">
+            </div>
+            <div class="col input-group">
+              <label for="top" class="input-group-addon">left:</label>
+              <input type="number" min=0 id="left" class="form-control croping">
+            </div>
+        </form>
+        
+      <button class="btn btn-outline-light mt-3" onclick="cropPdf()">crop pdf</button>
+    </div>
+
+    <div class="container-fluid" id="about-section">
+        <h1>About</h1>
+        <p>youssefhoummad</p>
+        <p>Full-stack devlopper</p>
+    </div>
+  
+    <nav class="navbar fixed-bottom navbar-light bg-faded px-5 py-0 shadow ">
+      <a href="#" class="btn" id="split-btn">
+        <img src="img/split-fill.png">
+        <small class="text-muted">split</small>
+      </a>
+      <a href="#" class="btn" id="merge-btn">
+        <img src="img/merge.png">
+        <small class="text-muted">merge</small>
+      </a>
+      <a href="#" class="btn" id="crop-btn">
+        <img src="img/crop.png">
+        <small class="text-muted">crop</small>
+      </a>
+      <a href="#" class="btn" id="about-btn">
+          <img src="img/about.png">
+          <small class="text-muted">about</small>
+        </a>
+    </nav>
+  <script>
+      // footer bar
+      $("#split-btn").click(function(e){
+        e.preventDefault();
+        $("#split-section").addClass('active');
+        $("#crop-section").removeClass('active');
+        $("#merge-section").removeClass('active');
+        $("#about-section").removeClass('active');
+
+        $("#split-btn").children('img').attr("src","img/split-fill.png");
+        $("#crop-btn").children('img').attr("src","img/crop.png");
+        $("#merge-btn").children('img').attr("src","img/merge.png");
+        $("#about-btn").children('img').attr("src","img/about.png");
+
+
+      });
+      $("#merge-btn").click(function(e){
+        e.preventDefault();
+        $("#split-section").removeClass('active');
+        $("#crop-section").removeClass('active');
+        $("#merge-section").addClass('active');
+        $("#about-section").removeClass('active');
+
+        $("#split-btn").children('img').attr("src","img/split.png");
+        $("#crop-btn").children('img').attr("src","img/crop.png");
+        $("#merge-btn").children('img').attr("src","img/merge-fill.png");
+        $("#about-btn").children('img').attr("src","img/about.png");
+
+      });
+      $("#crop-btn").click(function(e){
+        e.preventDefault();
+        $("#split-section").removeClass('active');
+        $("#crop-section").addClass('active');
+        $("#merge-section").removeClass('active');
+        $("#about-section").removeClass('active');
+
+        $("#split-btn").children('img').attr("src","img/split.png");
+        $("#crop-btn").children('img').attr("src","img/crop-fill.png");
+        $("#merge-btn").children('img').attr("src","img/merge.png");
+        $("#about-btn").children('img').attr("src","img/about.png");
+
+      });
+      $("#about-btn").click(function(e){
+        e.preventDefault();
+        $("#split-section").removeClass('active');
+        $("#crop-section").removeClass('active');
+        $("#merge-section").removeClass('active');
+        $("#about-section").addClass('active');
+
+        $("#split-btn").children('img').attr("src","img/split.png");
+        $("#crop-btn").children('img').attr("src","img/crop.png");
+        $("#merge-btn").children('img').attr("src","img/merge.png");
+        $("#about-btn").children('img').attr("src","img/about-fill.png");
+
+      });
+
+      // split section
+      function splitPdf(){
+        var pdf_file = document.getElementById("pdfFile").value;
+        var start_page = document.getElementById("startPage").value;
+        var end_page = document.getElementById("endPage").value;
+  
+        eel.split(pdf_file, start_page, end_page)(function(returned){
+          console.log("split completed!")
+        });
+      }
+
+      async function getPdfPath() {
+        var file_path = await eel.btn_ResimyoluClick()();
+        file_path = file_path.replace(/\//g, "//");
+        document.getElementById("pdfFile").value = file_path;
+        var number_pages = await eel.get_number_of_pages(file_path)();
+        document.getElementById("endPage").max = number_pages;
+      }
+
+
+      // merge section
+      async function getPdfPath1() {
+        var file_path = await eel.btn_ResimyoluClick()();
+        file_path = file_path.replace(/\//g, "//");
+        document.getElementById("pdfFile1").value = file_path;
+      }
+
+      async function getPdfPath2() {
+        var file_path = await eel.btn_ResimyoluClick()();
+        file_path = file_path.replace(/\//g, "//");
+        document.getElementById("pdfFile2").value = file_path;
+      }
+
+      function mergePdf(){
+        var pdf_file1 = document.getElementById("pdfFile1").value;
+        var pdf_file2 = document.getElementById("pdfFile2").value;
+  
+        eel.merge(pdf_file1, pdf_file2)(function(returned){
+          console.log("merge completed!")
+        });
+      };
+
+
+      // crop section
+
+      async function getPdfPath3() {
+        var file_path = await eel.btn_ResimyoluClick()();
+        file_path = file_path.replace(/\//g, "//");
+        document.getElementById("pdfFile3").value = file_path;
+      }
+
+      function cropPdf(){
+        var top = $('#top').val(),
+            left = $('#left').val(),
+            right = $('#right').val(),
+            bottom = $('#bottom').val(),
+            pdf_file = $('#pdfFile3').val();
+  
+        eel.crop(pdf_file, top, right, bottom, left)(function(returned){
+          console.log("crop completed!")
+        });
+      };
+      </script>
+  </body>
+</html>
